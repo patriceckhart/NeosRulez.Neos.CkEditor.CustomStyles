@@ -1,0 +1,19 @@
+{
+  "description": "Custom styles for Neos CK Editor",
+  "license": "GNU GPLv3",
+  "private": true,
+  "scripts": {
+    "build": "neos-react-scripts build",
+    "watch": "neos-react-scripts watch"
+  },
+  "devDependencies": {
+    "@neos-project/neos-ui-extensibility": "^8.0.1"
+  },
+  "neos": {
+    "buildTargetDirectory": "../../Public"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-basic-styles": "^34.2.0",
+    "@neos-project/react-ui-components": "^8.0.1"
+  }
+}

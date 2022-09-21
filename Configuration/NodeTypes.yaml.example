@@ -1,0 +1,8 @@
+'Neos.NodeTypes:Text':
+  properties:
+    text:
+      ui:
+        inline:
+          editorOptions:
+            customStyles:
+              textColor: true

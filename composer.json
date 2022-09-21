@@ -1,0 +1,19 @@
+{
+  "description": "Custom styles for Neos CK Editor.",
+  "type": "neos-plugin",
+  "name": "neosrulez/neos-ckeditor-customstyles",
+  "require": {
+    "neos/neos": "^7.0 || ^8.0",
+    "neos/neos-ui": "^7.0 || ^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "NeosRulez\\Neos\\CkEditor\\CustomStyles\\": "Classes/"
+    }
+  },
+  "extra": {
+    "neos": {
+      "package-key": "NeosRulez.Neos.CkEditor.CustomStyles"
+    }
+  }
+}

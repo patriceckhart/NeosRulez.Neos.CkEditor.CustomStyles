@@ -1,0 +1,12 @@
+Neos:
+  Neos:
+    Ui:
+      resources:
+        stylesheets:
+          'NeosRulez.Neos.CkEditor.CustomStyles':
+            resource: '${"resource://NeosRulez.Neos.CkEditor.CustomStyles/Public/Plugin.css"}'
+        javascript:
+          'NeosRulez.Neos.CkEditor.CustomStyles':
+            resource: '${"resource://NeosRulez.Neos.CkEditor.CustomStyles/Public/Plugin.js"}'
+      frontendConfiguration:
+        'NeosRulez.Neos.CkEditor.CustomStyles.GlobalStyles': '${Configuration.setting(''NeosRulez.Neos.CkEditor.CustomStyles'')}'
