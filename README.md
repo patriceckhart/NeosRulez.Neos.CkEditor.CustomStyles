@@ -1,6 +1,6 @@
 # Custom styles for Neos CMS CKEditor
 
-A Neos CMS plugin that allows you to apply your own style sheets to text.
+A Neos CMS plugin that allows you to apply your own stylesheets to text.
 
 ## Installation
 
