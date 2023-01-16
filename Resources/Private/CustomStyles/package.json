@@ -7,13 +7,14 @@
     "watch": "neos-react-scripts watch"
   },
   "devDependencies": {
-    "@neos-project/neos-ui-extensibility": "^8.0.1"
+    "@neos-project/neos-ui-extensibility": "^8.2",
+    "@neos-project/build-essentials": "8.2"
   },
   "neos": {
     "buildTargetDirectory": "../../Public"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-basic-styles": "^34.2.0",
-    "@neos-project/react-ui-components": "^8.0.1"
+    "@neos-project/react-ui-components": "^8.2"
   }
 }

@@ -9,6 +9,8 @@ import {selectors} from '@neos-project/neos-ui-redux-store';
 import * as CkEditorApi from '@neos-project/neos-ui-ckeditor5-bindings';
 import OptionWithPreview from "./OptionWithPreview";
 
+import styles from "./styles.css";
+
 @connect($transform({
     formattingUnderCursor: selectors.UI.ContentCanvas.formattingUnderCursor
 }))
@@ -49,6 +51,7 @@ export default class InlineStyleSelector extends PureComponent {
                 placeholder={this.props.presetConfiguration.label}
                 onValueChange={this.handleOnSelect}
                 ListPreviewElement={OptionWithPreview}
+								className={styles.customStyles}
             />
         );
     }

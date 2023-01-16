@@ -3,8 +3,8 @@
   "type": "neos-plugin",
   "name": "neosrulez/neos-ckeditor-customstyles",
   "require": {
-    "neos/neos": "^7.0 || ^8.0",
-    "neos/neos-ui": "^7.0 || ^8.0"
+    "neos/neos": "^8.0 || ^8.1 || ^8.2",
+    "neos/neos-ui": "^8.0 || ^8.1 || ^8.2"
   },
   "autoload": {
     "psr-4": {
