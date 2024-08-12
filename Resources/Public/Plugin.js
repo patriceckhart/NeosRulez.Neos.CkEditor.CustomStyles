@@ -1566,6 +1566,9 @@ var OptionWithPreview = (_temp = _class = class OptionWithPreview extends _react
 				imageUri: option.preview,
 				label: option.label,
 				className: _styles2.default.previewOption
+			})),
+			!option.backgroundColor && !option.textColor && !option.preview && _react2.default.createElement(_reactUiComponents.SelectBox_Option_SingleLine, _extends({}, this.props, {
+				label: option.label
 			}))
 		);
 	}
@@ -1731,6 +1734,8 @@ var _InlineStyleSelector2 = _interopRequireDefault(_InlineStyleSelector);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 (0, _neosUiExtensibility2.default)('NeosRulez.Neos.CkEditor.CustomStyles', {}, function (globalRegistry, _ref) {
 	var frontendConfiguration = _ref.frontendConfiguration;
 
@@ -1741,8 +1746,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 	var inlineStyleConfiguration = frontendConfiguration['NeosRulez.Neos.CkEditor.CustomStyles.GlobalStyles'];
 
-	if (Object.keys(inlineStyleConfiguration.presets).length > 0) {
-
+	if (inlineStyleConfiguration.presets && Object.keys(inlineStyleConfiguration.presets).length > 0) {
 		Object.keys(inlineStyleConfiguration.presets).forEach(function (presetIdentifier) {
 
 			var inlineStylePresetConfiguration = inlineStyleConfiguration.presets[presetIdentifier];
@@ -1768,6 +1772,46 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 				presetConfiguration: inlineStylePresetConfiguration
 			});
 		});
+	} else {
+		if (inlineStyleConfiguration.dataSource) {
+
+			var label = inlineStyleConfiguration.dataSource.label;
+			var dataSourceIdentifier = inlineStyleConfiguration.dataSource.dataSourceIdentifier;
+
+			var dataSourceModel = { presets: _defineProperty({}, dataSourceIdentifier, { label: label }) };
+
+			fetch('/neos/service/data-source/' + dataSourceIdentifier, { method: 'GET', redirect: 'follow', credentials: 'include' }).then(function (response) {
+				return response.json();
+			}).then(function (result) {
+
+				var items = [];
+				for (var i in result) {
+					var item = result[i];
+					items[item.value] = item;
+				}
+
+				dataSourceModel.presets[dataSourceIdentifier].options = items;
+
+				config.set('NeosRulez.Neos.CkEditor.CustomStyles:InlineStyles_' + dataSourceIdentifier, function (ckEditorConfiguration, _ref3) {
+					var editorOptions = _ref3.editorOptions;
+
+					ckEditorConfiguration.plugins = ckEditorConfiguration.plugins || [];
+					ckEditorConfiguration.plugins.push((0, _InlineStylesEditing2.default)(dataSourceIdentifier, dataSourceModel.presets[dataSourceIdentifier]));
+					return ckEditorConfiguration;
+				});
+
+				richtextToolbar.set('inlineStyles_' + dataSourceIdentifier, {
+					component: _InlineStyleSelector2.default,
+					isVisible: function isVisible() {
+						return true;
+					},
+					presetIdentifier: dataSourceIdentifier,
+					presetConfiguration: dataSourceModel.presets[dataSourceIdentifier]
+				});
+			}).catch(function (error) {
+				return console.error(error);
+			});
+		}
 	}
 });
 

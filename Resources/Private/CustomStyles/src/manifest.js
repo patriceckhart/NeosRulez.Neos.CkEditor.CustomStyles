@@ -11,8 +11,7 @@ manifest('NeosRulez.Neos.CkEditor.CustomStyles', {}, (globalRegistry, {frontendC
 
 	const inlineStyleConfiguration = frontendConfiguration['NeosRulez.Neos.CkEditor.CustomStyles.GlobalStyles'];
 
-	if (Object.keys(inlineStyleConfiguration.presets).length > 0) {
-
+	if (inlineStyleConfiguration.presets && Object.keys(inlineStyleConfiguration.presets).length > 0) {
 		Object.keys(inlineStyleConfiguration.presets).forEach((presetIdentifier) => {
 
 			const inlineStylePresetConfiguration = inlineStyleConfiguration.presets[presetIdentifier];
@@ -35,6 +34,45 @@ manifest('NeosRulez.Neos.CkEditor.CustomStyles', {}, (globalRegistry, {frontendC
 				presetIdentifier: presetIdentifier,
 				presetConfiguration: inlineStylePresetConfiguration
 			});
+
 		});
+	} else {
+		if (inlineStyleConfiguration.dataSource) {
+
+			const label = inlineStyleConfiguration.dataSource.label;
+			const dataSourceIdentifier = inlineStyleConfiguration.dataSource.dataSourceIdentifier;
+
+			let dataSourceModel = {presets: {[dataSourceIdentifier]: {label: label}}}
+
+			fetch(`/neos/service/data-source/${dataSourceIdentifier}`, {method: 'GET', redirect: 'follow', credentials: 'include'})
+				.then((response) => response.json())
+				.then((result) => {
+
+					let items = [];
+					for (let i in result) {
+						const item = result[i];
+						items[item.value] = item;
+					}
+
+					dataSourceModel.presets[dataSourceIdentifier].options = items;
+
+					config.set(`NeosRulez.Neos.CkEditor.CustomStyles:InlineStyles_${dataSourceIdentifier}`, (ckEditorConfiguration, {editorOptions}) => {
+						ckEditorConfiguration.plugins = ckEditorConfiguration.plugins || [];
+						ckEditorConfiguration.plugins.push(InlineStylesEditing(dataSourceIdentifier, dataSourceModel.presets[dataSourceIdentifier]));
+						return ckEditorConfiguration;
+					});
+
+					richtextToolbar.set(`inlineStyles_${dataSourceIdentifier}`, {
+						component: InlineStyleSelector,
+						isVisible: function () {
+							return true
+						},
+						presetIdentifier: dataSourceIdentifier,
+						presetConfiguration: dataSourceModel.presets[dataSourceIdentifier]
+					});
+
+				})
+				.catch((error) => console.error(error));
+		}
 	}
 });

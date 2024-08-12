@@ -4,8 +4,6 @@ A Neos CMS plugin that allows you to apply your own stylesheets to text.
 
 ## Installation
 
-The NeosRulez.Neos.CkEditor.CustomStyles package is listed on packagist (https://packagist.org/packages/neosrulez/neos-ckeditor-customstyles) - therefore you don't have to include the package in your "repositories" entry any more.
-
 Just run:
 
 ```
@@ -14,6 +12,7 @@ composer require neosrulez/neos-ckeditor-customstyles
 
 ## Configuration
 
+### Presets
 ```yaml
 NeosRulez:
   Neos:
@@ -30,9 +29,22 @@ NeosRulez:
               secondary:
                 label: Secondary
                 cssClasses: 'text-primary'
+                backgroundColor: '#0a58ca'
+                textColor: '#FFFFFF'
               success:
                 label: Success
                 cssClasses: 'text-success'
+```
+
+### DataSource
+```yaml
+NeosRulez:
+  Neos:
+    CkEditor:
+      CustomStyles:
+        dataSource:
+          label: Font Awesome
+          dataSourceIdentifier: neosrulez-bootstrap-fa
 ```
 
 ## Usage

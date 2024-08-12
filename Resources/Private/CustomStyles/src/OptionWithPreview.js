@@ -1,7 +1,7 @@
 import React, {Fragment, PureComponent} from "react";
 import PropTypes from "prop-types";
 // eslint-disable-next-line camelcase
-import { SelectBox_Option_MultiLineWithThumbnail } from "@neos-project/react-ui-components";
+import {SelectBox, SelectBox_Option_MultiLineWithThumbnail, SelectBox_Option_SingleLine} from "@neos-project/react-ui-components";
 import styles from "./styles.css"
 import SelectBox_Option_MultiLineWithStyle from "./SelectBox_Option_MultiLineWithStyle";
 
@@ -36,6 +36,12 @@ class OptionWithPreview extends PureComponent {
 						imageUri={option.preview}
 						label={option.label}
 						className={styles.previewOption}
+					/>
+				}
+				{!option.backgroundColor && !option.textColor && !option.preview &&
+					<SelectBox_Option_SingleLine
+						{...this.props}
+						label={option.label}
 					/>
 				}
 			</Fragment>
