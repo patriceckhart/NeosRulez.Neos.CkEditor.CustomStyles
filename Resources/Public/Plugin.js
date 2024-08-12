@@ -1562,7 +1562,7 @@ var OptionWithPreview = (_temp = _class = class OptionWithPreview extends _react
 				label: option.label,
 				className: _styles2.default.previewOption
 			})),
-			(option.preview || !option.backgroundColor && !option.textColor) && _react2.default.createElement(_reactUiComponents.SelectBox_Option_MultiLineWithThumbnail, _extends({}, this.props, {
+			option.preview && !option.backgroundColor && !option.textColor && _react2.default.createElement(_reactUiComponents.SelectBox_Option_MultiLineWithThumbnail, _extends({}, this.props, {
 				imageUri: option.preview,
 				label: option.label,
 				className: _styles2.default.previewOption

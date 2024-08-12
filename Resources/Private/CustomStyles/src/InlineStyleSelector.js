@@ -47,15 +47,15 @@ export default class InlineStyleSelector extends PureComponent {
         const currentValue = this.props.formattingUnderCursor[`inlineStyles:${this.props.presetIdentifier}`];
 
         return (
-            <SelectBox
-                options={optionsForSelect}
-                value={currentValue}
-                allowEmpty={true}
-                placeholder={this.props.presetConfiguration.label}
-                onValueChange={this.handleOnSelect}
-                ListPreviewElement={OptionWithPreview}
-								className={styles.customStyles}
-            />
+			<SelectBox
+				options={optionsForSelect}
+				value={currentValue}
+				allowEmpty={true}
+				placeholder={this.props.presetConfiguration.label}
+				onValueChange={this.handleOnSelect}
+				ListPreviewElement={OptionWithPreview}
+				className={styles.customStyles}
+			/>
         );
     }
 
