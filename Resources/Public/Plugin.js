@@ -1758,6 +1758,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 					var items = [];
 					for (var i in result) {
 						var item = result[i];
+						item.cssClasses = item.value;
 						items[item.value] = item;
 					}
 

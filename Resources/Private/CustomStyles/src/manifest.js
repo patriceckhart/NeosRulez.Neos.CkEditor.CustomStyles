@@ -25,6 +25,7 @@ manifest('NeosRulez.Neos.CkEditor.CustomStyles', {}, (globalRegistry, {frontendC
 						let items = [];
 						for (let i in result) {
 							const item = result[i];
+							item.cssClasses = item.value;
 							items[item.value] = item;
 						}
 
