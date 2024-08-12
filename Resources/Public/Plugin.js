@@ -1734,8 +1734,6 @@ var _InlineStyleSelector2 = _interopRequireDefault(_InlineStyleSelector);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 (0, _neosUiExtensibility2.default)('NeosRulez.Neos.CkEditor.CustomStyles', {}, function (globalRegistry, _ref) {
 	var frontendConfiguration = _ref.frontendConfiguration;
 
@@ -1750,6 +1748,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		Object.keys(inlineStyleConfiguration.presets).forEach(function (presetIdentifier) {
 
 			var inlineStylePresetConfiguration = inlineStyleConfiguration.presets[presetIdentifier];
+
+			if (inlineStyleConfiguration.presets[presetIdentifier].dataSourceIdentifier) {
+
+				fetch('/neos/service/data-source/' + inlineStyleConfiguration.presets[presetIdentifier].dataSourceIdentifier, { method: 'GET', redirect: 'follow', credentials: 'include' }).then(function (response) {
+					return response.json();
+				}).then(function (result) {
+
+					var items = [];
+					for (var i in result) {
+						var item = result[i];
+						items[item.value] = item;
+					}
+
+					inlineStylePresetConfiguration.options = items;
+				}).catch(function (error) {
+					return console.error(error);
+				});
+			}
 
 			config.set('NeosRulez.Neos.CkEditor.CustomStyles:InlineStyles_' + presetIdentifier, function (ckEditorConfiguration, _ref2) {
 				var editorOptions = _ref2.editorOptions;
@@ -1772,46 +1788,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				presetConfiguration: inlineStylePresetConfiguration
 			});
 		});
-	} else {
-		if (inlineStyleConfiguration.dataSource) {
-
-			var label = inlineStyleConfiguration.dataSource.label;
-			var dataSourceIdentifier = inlineStyleConfiguration.dataSource.dataSourceIdentifier;
-
-			var dataSourceModel = { presets: _defineProperty({}, dataSourceIdentifier, { label: label }) };
-
-			fetch('/neos/service/data-source/' + dataSourceIdentifier, { method: 'GET', redirect: 'follow', credentials: 'include' }).then(function (response) {
-				return response.json();
-			}).then(function (result) {
-
-				var items = [];
-				for (var i in result) {
-					var item = result[i];
-					items[item.value] = item;
-				}
-
-				dataSourceModel.presets[dataSourceIdentifier].options = items;
-
-				config.set('NeosRulez.Neos.CkEditor.CustomStyles:InlineStyles_' + dataSourceIdentifier, function (ckEditorConfiguration, _ref3) {
-					var editorOptions = _ref3.editorOptions;
-
-					ckEditorConfiguration.plugins = ckEditorConfiguration.plugins || [];
-					ckEditorConfiguration.plugins.push((0, _InlineStylesEditing2.default)(dataSourceIdentifier, dataSourceModel.presets[dataSourceIdentifier]));
-					return ckEditorConfiguration;
-				});
-
-				richtextToolbar.set('inlineStyles_' + dataSourceIdentifier, {
-					component: _InlineStyleSelector2.default,
-					isVisible: function isVisible() {
-						return true;
-					},
-					presetIdentifier: dataSourceIdentifier,
-					presetConfiguration: dataSourceModel.presets[dataSourceIdentifier]
-				});
-			}).catch(function (error) {
-				return console.error(error);
-			});
-		}
 	}
 });
 

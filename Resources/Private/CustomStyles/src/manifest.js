@@ -14,7 +14,26 @@ manifest('NeosRulez.Neos.CkEditor.CustomStyles', {}, (globalRegistry, {frontendC
 	if (inlineStyleConfiguration.presets && Object.keys(inlineStyleConfiguration.presets).length > 0) {
 		Object.keys(inlineStyleConfiguration.presets).forEach((presetIdentifier) => {
 
-			const inlineStylePresetConfiguration = inlineStyleConfiguration.presets[presetIdentifier];
+			let inlineStylePresetConfiguration = inlineStyleConfiguration.presets[presetIdentifier];
+
+			if(inlineStyleConfiguration.presets[presetIdentifier].dataSourceIdentifier) {
+
+				fetch(`/neos/service/data-source/${inlineStyleConfiguration.presets[presetIdentifier].dataSourceIdentifier}`, {method: 'GET', redirect: 'follow', credentials: 'include'})
+					.then((response) => response.json())
+					.then((result) => {
+
+						let items = [];
+						for (let i in result) {
+							const item = result[i];
+							items[item.value] = item;
+						}
+
+						inlineStylePresetConfiguration.options = items;
+
+					})
+					.catch((error) => console.error(error));
+
+			}
 
 			config.set(`NeosRulez.Neos.CkEditor.CustomStyles:InlineStyles_${presetIdentifier}`, (ckEditorConfiguration, {editorOptions}) => {
 				ckEditorConfiguration.plugins = ckEditorConfiguration.plugins || [];
@@ -36,43 +55,6 @@ manifest('NeosRulez.Neos.CkEditor.CustomStyles', {}, (globalRegistry, {frontendC
 			});
 
 		});
-	} else {
-		if (inlineStyleConfiguration.dataSource) {
-
-			const label = inlineStyleConfiguration.dataSource.label;
-			const dataSourceIdentifier = inlineStyleConfiguration.dataSource.dataSourceIdentifier;
-
-			let dataSourceModel = {presets: {[dataSourceIdentifier]: {label: label}}}
-
-			fetch(`/neos/service/data-source/${dataSourceIdentifier}`, {method: 'GET', redirect: 'follow', credentials: 'include'})
-				.then((response) => response.json())
-				.then((result) => {
-
-					let items = [];
-					for (let i in result) {
-						const item = result[i];
-						items[item.value] = item;
-					}
-
-					dataSourceModel.presets[dataSourceIdentifier].options = items;
-
-					config.set(`NeosRulez.Neos.CkEditor.CustomStyles:InlineStyles_${dataSourceIdentifier}`, (ckEditorConfiguration, {editorOptions}) => {
-						ckEditorConfiguration.plugins = ckEditorConfiguration.plugins || [];
-						ckEditorConfiguration.plugins.push(InlineStylesEditing(dataSourceIdentifier, dataSourceModel.presets[dataSourceIdentifier]));
-						return ckEditorConfiguration;
-					});
-
-					richtextToolbar.set(`inlineStyles_${dataSourceIdentifier}`, {
-						component: InlineStyleSelector,
-						isVisible: function () {
-							return true
-						},
-						presetIdentifier: dataSourceIdentifier,
-						presetConfiguration: dataSourceModel.presets[dataSourceIdentifier]
-					});
-
-				})
-				.catch((error) => console.error(error));
-		}
 	}
+
 });

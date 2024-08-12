@@ -12,13 +12,15 @@ composer require neosrulez/neos-ckeditor-customstyles
 
 ## Configuration
 
-### Presets
 ```yaml
 NeosRulez:
   Neos:
     CkEditor:
       CustomStyles:
         presets:
+          fontAwesomeIcon:
+            label: Font Awesome
+            dataSourceIdentifier: neosrulez-bootstrap-fa
           textColor:
             label: Text color
             options:
@@ -36,17 +38,6 @@ NeosRulez:
                 cssClasses: 'text-success'
 ```
 
-### DataSource
-```yaml
-NeosRulez:
-  Neos:
-    CkEditor:
-      CustomStyles:
-        dataSource:
-          label: Font Awesome
-          dataSourceIdentifier: neosrulez-bootstrap-fa
-```
-
 ## Usage
 
 ```yaml
@@ -57,6 +48,7 @@ NeosRulez:
         inline:
           editorOptions:
             customStyles:
+              fontAwesomeIcon: true
               textColor: true
 ```
 
