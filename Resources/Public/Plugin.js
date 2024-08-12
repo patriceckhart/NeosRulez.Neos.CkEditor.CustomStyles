@@ -1210,7 +1210,10 @@ var InlineStyleSelector = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfor
                 value: optionIdentifier,
                 label: optionConfiguration.label,
                 icon: optionConfiguration.icon,
-                preview: optionConfiguration.preview
+                preview: optionConfiguration.preview,
+                backgroundColor: optionConfiguration.backgroundColor,
+                textColor: optionConfiguration.textColor,
+                group: optionConfiguration.group
             };
         });
 
@@ -1515,7 +1518,7 @@ exports.default = function (presetIdentifier, presetConfiguration) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -1538,26 +1541,42 @@ var _styles = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
 
 var _styles2 = _interopRequireDefault(_styles);
 
+var _SelectBox_Option_MultiLineWithStyle = __webpack_require__(/*! ./SelectBox_Option_MultiLineWithStyle */ "./src/SelectBox_Option_MultiLineWithStyle.js");
+
+var _SelectBox_Option_MultiLineWithStyle2 = _interopRequireDefault(_SelectBox_Option_MultiLineWithStyle);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var OptionWithPreview = (_temp = _class = class OptionWithPreview extends _react.PureComponent {
 
-    render() {
-        var option = this.props.option;
+	render() {
+		var option = this.props.option;
 
 
-        return _react2.default.createElement(_reactUiComponents.SelectBox_Option_MultiLineWithThumbnail, _extends({}, this.props, {
-            imageUri: option.preview,
-            label: option.label,
-            className: _styles2.default.previewOption
-        }));
-    }
+		return _react2.default.createElement(
+			_react.Fragment,
+			null,
+			option.backgroundColor && _react2.default.createElement(_SelectBox_Option_MultiLineWithStyle2.default, _extends({}, this.props, {
+				backgroundColor: option.backgroundColor,
+				textColor: option.textColor,
+				label: option.label,
+				className: _styles2.default.previewOption
+			})),
+			(option.preview || !option.backgroundColor && !option.textColor) && _react2.default.createElement(_reactUiComponents.SelectBox_Option_MultiLineWithThumbnail, _extends({}, this.props, {
+				imageUri: option.preview,
+				label: option.label,
+				className: _styles2.default.previewOption
+			}))
+		);
+	}
 }, _class.propTypes = {
-    option: _propTypes2.default.shape({
-        label: _propTypes2.default.string.isRequired,
-        loaderUri: _propTypes2.default.string.isRequired,
-        preview: _propTypes2.default.string
-    })
+	option: _propTypes2.default.shape({
+		label: _propTypes2.default.string.isRequired,
+		loaderUri: _propTypes2.default.string.isRequired,
+		preview: _propTypes2.default.string,
+		backgroundColor: _propTypes2.default.string,
+		textColor: _propTypes2.default.string
+	})
 }, _temp);
 exports.default = OptionWithPreview;
 
@@ -1605,6 +1624,75 @@ exports.default = _propTypes2.default.shape({
 
 /***/ }),
 
+/***/ "./src/SelectBox_Option_MultiLineWithStyle.js":
+/*!****************************************************!*\
+  !*** ./src/SelectBox_Option_MultiLineWithStyle.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _class, _temp;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _styles = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
+
+var _styles2 = _interopRequireDefault(_styles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SelectBox_Option_MultiLineWithStyle = (_temp = _class = class SelectBox_Option_MultiLineWithStyle extends _react.PureComponent {
+
+	render() {
+		var _props = this.props,
+		    label = _props.label,
+		    backgroundColor = _props.backgroundColor,
+		    textColor = _props.textColor,
+		    onClick = _props.onClick,
+		    onMouseEnter = _props.onMouseEnter;
+
+
+		return _react2.default.createElement(
+			'div',
+			{
+				onMouseEnter: onMouseEnter,
+				onClick: onClick,
+				role: 'button',
+				style: { backgroundColor: backgroundColor, color: textColor },
+				className: _styles2.default.option
+			},
+			_react2.default.createElement('div', { className: _styles2.default.preview, style: { backgroundColor: backgroundColor } }),
+			_react2.default.createElement(
+				'span',
+				null,
+				label
+			)
+		);
+	}
+}, _class.propTypes = {
+	label: _propTypes2.default.string.isRequired,
+	style: _propTypes2.default.string,
+	onClick: _propTypes2.default.func,
+	isHighlighted: _propTypes2.default.bool,
+	onMouseEnter: _propTypes2.default.func
+}, _temp);
+exports.default = SelectBox_Option_MultiLineWithStyle;
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -1632,8 +1720,6 @@ __webpack_require__(/*! ./manifest */ "./src/manifest.js");
 var _neosUiExtensibility = __webpack_require__(/*! @neos-project/neos-ui-extensibility */ "./node_modules/@neos-project/neos-ui-extensibility/dist/index.js");
 
 var _neosUiExtensibility2 = _interopRequireDefault(_neosUiExtensibility);
-
-var _plowJs = __webpack_require__(/*! plow-js */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/plow-js/index.js");
 
 var _InlineStylesEditing = __webpack_require__(/*! ./InlineStylesEditing */ "./src/InlineStylesEditing.js");
 
@@ -1695,7 +1781,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"previewOption":"styles__previewOption___3b9iy","customStyles":"styles__customStyles___3V-gP"};
+module.exports = {"previewOption":"styles__previewOption___3b9iy","customStyles":"styles__customStyles___3V-gP","option":"styles__option___1sn1C","preview":"styles__preview___2cXKK"};
 
 /***/ })
 

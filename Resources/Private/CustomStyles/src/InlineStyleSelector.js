@@ -34,7 +34,10 @@ export default class InlineStyleSelector extends PureComponent {
                 value: optionIdentifier,
                 label: optionConfiguration.label,
                 icon: optionConfiguration.icon,
-                preview: optionConfiguration.preview
+                preview: optionConfiguration.preview,
+				backgroundColor: optionConfiguration.backgroundColor,
+				textColor: optionConfiguration.textColor,
+				group: optionConfiguration.group,
             }));
 
         if (optionsForSelect.length === 0) {

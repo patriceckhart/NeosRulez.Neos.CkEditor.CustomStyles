@@ -1,0 +1,15 @@
+.previewOption { min-height:40px; line-height:40px !important; padding-top:0 !important; padding-bottom:0 !important;
+	img { background:none !important; margin-top:-10px; }
+}
+.customStyles {
+	div[role="button"] { background:#323232; }
+}
+.option { height:40px;  cursor:pointer; padding-left:16px;
+	.preview { display:none; }
+}
+li[role="option"] {
+	.option { padding: 10px 5px 5px 16px; display: flex; flex-direction: row; gap:16px; align-items:start; background:none !important; color:#FFF !important;
+		.preview { display:flex; background:#FFF; width:20px; height:20px; padding:0; border-radius:2px; }
+		&:hover { background:#00adee !important; }
+	}
+}
