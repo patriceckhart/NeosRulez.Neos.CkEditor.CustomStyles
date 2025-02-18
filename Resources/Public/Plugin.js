@@ -1780,7 +1780,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 				component: _InlineStyleSelector2.default,
 				isVisible: function isVisible(editorOptions) {
 					var isVisible = false;
-					if (editorOptions['customStyles'] !== undefined && editorOptions['customStyles'][presetIdentifier] !== undefined) {
+					if (editorOptions && editorOptions['customStyles'] !== undefined && editorOptions['customStyles'][presetIdentifier] !== undefined) {
 						isVisible = editorOptions['customStyles'][presetIdentifier];
 					}
 					return isVisible;

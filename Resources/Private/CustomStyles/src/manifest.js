@@ -45,10 +45,10 @@ manifest('NeosRulez.Neos.CkEditor.CustomStyles', {}, (globalRegistry, {frontendC
 			richtextToolbar.set(`inlineStyles_${presetIdentifier}`, {
 				component: InlineStyleSelector,
 				isVisible: function (editorOptions) {
-					var isVisible = false;
-					if (editorOptions['customStyles'] !== undefined && editorOptions['customStyles'][presetIdentifier] !== undefined) {
-						isVisible = editorOptions['customStyles'][presetIdentifier];
-					}
+					let isVisible = false;
+                    if (editorOptions && editorOptions['customStyles'] !== undefined && editorOptions['customStyles'][presetIdentifier] !== undefined) {
+                        isVisible = editorOptions['customStyles'][presetIdentifier];
+                    }
 					return isVisible;
 				},
 				presetIdentifier: presetIdentifier,
